@@ -1,0 +1,214 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <title>CodePen - In Bloom: Fruity Ecommerce</title>
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'>
+    <link rel='stylesheet' href='https://github.com/BlackrockDigital/startbootstrap-shop-homepage/blob/gh-pages/css/shop-homepage.css'>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<title>in bl00m</title>
+
+    <!--googlefont for Branding-->
+    <link href='https://fonts.googleapis.com/css?family=Shadows+Into+Light' rel='stylesheet' type='text/css'>
+
+    <!--font awesome for icons-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+    <!--Bootstrap Core CSS -->
+<!--     <link href="css/bootstrap.min.css" rel="stylesheet"> -->
+
+    <!-- Custom CSS for SHOP -->
+<!--     <link href="css/shop-homepage.css" rel="stylesheet">
+ -->
+    <!--custom CSS for unique STYLING
+    <link href="css/styles.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">in bl00m</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#"><i class="fa fa-heart-o"></i> </i>Favorite</a>
+                    </li>
+                    <li>
+                        {% if user.is_authenticated %}
+                            <a href="logout"><i class="fa fa-commenting-o"></i>{{ user.username }}</a>
+                        {% else %}
+                            <a href="/register"><i class="fa fa-commenting-o"></i>Sign up</a>
+                        {% endif %}
+                    </li>
+                    <li id="cart" onclick="cartFunction()"><a href="#"><i class="fa fa-shopping-basket"></i>  Your Basket</a></li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-md-3">
+                <p class="lead">in-season-local-regional produce to your door, every monday: because mondays don't have to suck</p>
+                <div class="list-group">
+                    {% for j in categories %}
+                    <a href="category/{{ j.id }}" class="list-group-item">{{ j.category_name }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="col-md-9">
+
+                <div class="row carousel-holder">
+
+                    <div class="col-md-12">
+                        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                            <ol class="carousel-indicators">
+                                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                            
+                            </ol>
+                            <div class="carousel-inner">
+                                <div class="item active">
+                                    <img class="slide-image" src="https://github.com/tesslynne/Bloom-Ecommerce-Fruit/blob/master/images/inbloom.jpg?raw=true" alt="seasonal produce for your health">
+                                </div>
+                                <div class="item">
+                                    <img class="slide-image" src="https://github.com/tesslynne/Bloom-Ecommerce-Fruit/blob/master/images/blossoms.jpg?raw=true" alt="season fruit">
+                                </div>
+                            </div>
+                            <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+                                <span class="glyphicon gly
+                                phicon-chevron-left"></span>
+                            </a>
+                            <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+                                <span class="glyphicon glyphicon-chevron-right"></span>
+                            </a>
+                        </div>
+                    </div>
+
+                 </div><!--end of carosouel holder div-->
+
+<!--ECOMMERCE ITEMS - POPULATE WITH JAVASCRIPT ONLY-->
+    <form action="" method="post">
+        {% csrf_token %}
+        <input type="text" placeholder="Search" name="search_product">
+        <button>Search</button>
+    </form>
+    {% if search_product %}
+   <div class="row">
+       {% for i in search_product %}
+       <div class="col-md-4">
+           <div class="card" style="width: 18rem;">
+               <img src="{{ i.image.url }}" width="200px" class="card-img-top" alt="...">
+               <div class="card-body">
+                   <h5 class="card-title">{{ i.product_name }}</h5>
+                   <p class="card-text">{{ i.price }}</p>
+                   <a href="/product/{{ i.id }}" class="btn btn-primary">See more</a>
+                   <form>
+                         <button class="btn btn-warning">Like</button>
+                   </form>
+                   <button class="btn btn-warning">Like</button>
+                   <form action="" method="post">
+                       <input type="number" min="1" value="1" name="pr_count">
+                       <button class="btn btn-success"><i class="fa fa-shopping-basket"></i></button>
+                   </form>>
+               </div>
+           </div>
+       </div>
+       {% endfor %}
+   </div>
+            </div>
+          {% else %}
+            <div class="row">
+                {% for i in products %}
+                <div class="col-md-4">
+                    <div class="card" style="width: 18rem;">
+                        <img src="{{ i.image.url }}" width="200px" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ i.product_name }}</h5>
+                            <p class="card-text">{{ i.price }}</p>
+                            <a href="#" class="btn btn-primary">See more</a>
+                            <form action="/add_favorite/{{ i.id }}" method="post">
+                                {% csrf_token %}
+                                <button class="btn btn-warning">Like</button>
+                            </form>
+                            <form action="/add_to_cart/{{ i.id }}" method="post">
+                                {% csrf_token %}
+                                <input type="number" min="1" value="1" name="pr_count">
+                                <button class="btn btn-success"><i class="fa fa-shopping-basket"></i></button>
+                            </form>>
+                        </div>
+                    </div>
+                </div>
+                    {% endfor %}
+            </div>
+            {% endif %}
+      
+
+                
+
+                   
+
+
+                    
+
+                </div><!--end of col md9 on line 79-->
+
+            </div> <!--end row-->
+
+    </div>
+    <!-- /.container -->
+
+    <div class="container">
+
+        <hr>
+
+        <!-- Footer -->
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright &copy; Your Website 2016</p>
+                    <p><a href="#">About in bloom</a></p>
+                    <p><a href="#">Your account</a></p>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+    <!-- /.container -->
+<!-- partial -->
+    <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js'></script>
+<script  src="{% static 'script.js' %}"></script>
+
+</body>
+</html>

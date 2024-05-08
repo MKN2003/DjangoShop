@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h3>This is favorite page</h3>
+    {% for i in favorite %}
+    <div style="text-align:center">
+        <h1>Single product page</h1>
+        <h3> Название товара: {{ i.user_product }}</h3>
+        <img src="{{ i.user_product.image.url }}" alt="">
+        <h5>Цена товара: {{ i.user_product.price }}</h5>
+        <p>Описание товара: {{ i.user_product.description }}</p>
+        <h3>У нас осталось в складе {{ i.user_product.count }} шт</h3>
+    </div>
+    {% endfor %}
+</body>
+</html>

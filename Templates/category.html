@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h3 style="text-align: center">This is category page</h3>
+    <h1 style="text-align: center"> Категория: {{ categories }}</h1>
+    <div class="row">
+       {% for i in products %}
+       <div class="col-md-4">
+           <div class="card" style="width: 18rem;">
+               <img src="{{ i.image.url }}" width="200px" class="card-img-top" alt="...">
+               <div class="card-body">
+                   <h5 class="card-title">{{ i.product_name }}</h5>
+                   <p class="card-text">{{ i.price }}</p>
+                   <a href="/product/{{ i.id }}" class="btn btn-primary">See more</a>
+               </div>
+           </div>
+       </div>
+       {% endfor %}
+   </div>
+</body>
+</html>
